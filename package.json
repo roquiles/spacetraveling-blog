@@ -7,13 +7,15 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --watchAll",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "slicemachine": "start-slicemachine"
   },
   "dependencies": {
     "@prismicio/client": "^6.4.3",
     "@prismicio/helpers": "^2.3.0",
     "@prismicio/next": "^0.1.2",
     "@prismicio/react": "^2.3.0",
+    "@prismicio/slice-simulator-react": "^0.2.2",
     "@prismicio/types": "^0.1.27",
     "date-fns": "^2.19.0",
     "next": "10.0.7",
@@ -21,6 +23,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-icons": "^4.2.0",
+    "slice-machine-ui": "^0.3.7",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
