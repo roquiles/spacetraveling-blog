@@ -13,7 +13,7 @@ import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
 
 interface Post {
-  slug?: string;
+  uid?: string;
   first_publication_date: string | null;
   data: {
     title: string;
@@ -63,20 +63,24 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
   return (
     <main className={commonStyles.container}>
       <div className={styles.posts}>
-        <header>
+        <header key="header">
           <Image src="/logo.svg" width={250} height={100} />
         </header>
 
         {posts.map(post => {
           return (
-            <Link href={`/post/${post.slug}`}>
-              <a key={post.slug}>
+            <Link href={`/post/${post.uid}`} key={Math.random()}>
+              <a key={post.uid}>
                 <strong>{post.data.title}</strong>
                 <p>{post.data.subtitle}</p>
 
-                <div className={styles.postInfos}>
+                <div className={commonStyles.postInfos}>
                   <FiCalendar />
-                  <span>{post.first_publication_date}</span>
+                  <span>
+                    {format(new Date(post.first_publication_date), 'd MMM u', {
+                      locale: ptBR,
+                    })}
+                  </span>
                   <FiUser />
                   <span>{post.data.author}</span>
                 </div>
@@ -104,14 +108,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const results = postsResponse.results?.map(post => {
     return {
-      slug: post.uid,
-      first_publication_date: format(
-        new Date(post.first_publication_date),
-        'd MMM u',
-        {
-          locale: ptBR,
-        }
-      ),
+      uid: post.uid,
+      first_publication_date: post.first_publication_date,
       data: {
         title: post.data.title,
         subtitle: post.data.subtitle,
