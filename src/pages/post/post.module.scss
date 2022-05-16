@@ -1,1 +1,40 @@
-// TODO
+.banner {
+  width: 100vw;
+  height: 25rem;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+}
+
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  display: flex;
+  align-items: center;
+
+  h1 {
+    margin: 5rem auto 1.5rem;
+    font-size: 3rem;
+    text-align: center;
+    color: var(--gray-50);
+  }
+
+  h2 {
+    margin: 4rem 0 3rem;
+    font-size: 2.25rem;
+    color: var(--gray-50);
+  }
+
+  p {
+    text-align: justify;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    margin-bottom: 1.75rem;
+
+    &:last-of-type {
+      margin-bottom: 4rem;
+    }
+  }
+}
