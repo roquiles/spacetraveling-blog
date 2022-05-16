@@ -13,7 +13,7 @@ import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
 
 interface Post {
-  uid?: string;
+  slug?: string;
   first_publication_date: string | null;
   data: {
     title: string;
@@ -69,8 +69,8 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
 
         {posts.map(post => {
           return (
-            <Link href="/">
-              <a key={post.uid}>
+            <Link href={`/post/${post.slug}`}>
+              <a key={post.slug}>
                 <strong>{post.data.title}</strong>
                 <p>{post.data.subtitle}</p>
 
