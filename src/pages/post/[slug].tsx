@@ -36,17 +36,21 @@ interface PostProps {
 export default function Post({ post }: PostProps): JSX.Element {
   const router = useRouter();
 
-  const wordsCount = post.data.content
-    .map(content => {
-      return content.body.reduce((acc, bodyContent) => {
-        return acc.concat(bodyContent.text.split(' '));
-      }, []);
-    })
-    .reduce((acc, wordArray) => {
-      return acc + wordArray.length;
-    }, 0);
+  function calcReadingTime(postData: Post) {
+    const wordsCount = postData.data.content
+      .map(content => {
+        return content.body.reduce((acc, bodyContent) => {
+          return acc.concat(bodyContent.text.split(' '));
+        }, []);
+      })
+      .reduce((acc, wordArray) => {
+        return acc + wordArray.length;
+      }, 0);
 
-  const readingTime = Math.ceil(wordsCount / 200);
+    const readingTime = Math.ceil(wordsCount / 200);
+
+    return readingTime;
+  }
 
   return (
     <>
@@ -78,7 +82,7 @@ export default function Post({ post }: PostProps): JSX.Element {
                 <FiUser />
                 <span>{post.data.author}</span>
                 <FiClock />
-                <span>{readingTime} min</span>
+                <span>{calcReadingTime(post)} min</span>
               </div>
               <div>
                 {post.data.content.map(content => (
@@ -100,7 +104,7 @@ export default function Post({ post }: PostProps): JSX.Element {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const prismic = getPrismicClient({});
-  const posts = await prismic.getByType('posts', { pageSize: 3 });
+  const posts = await prismic.getByType('posts');
 
   const paths = posts.results?.map(post => {
     return { params: { slug: post.uid } };
@@ -113,10 +117,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { slug } = params;
+  const { slug: uid } = params;
 
   const prismic = getPrismicClient({});
-  const response = await prismic.getByUID('posts', String(slug));
+  const response = await prismic.getByUID('posts', String(uid));
 
   return {
     props: {
